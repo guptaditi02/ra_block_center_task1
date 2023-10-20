@@ -1,0 +1,33 @@
+# Python artifacts
+*.pyc
+*.pyo
+*.egg-info
+*.rej
+*.orig
+
+# Virtual environment
+venv/
+__pycache__/
+
+# Flask instance folder
+instance/
+
+# Flask session storage
+flask_session/
+
+# VS Code
+.vscode/
+
+# IDE - PyCharm
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Environment variables
+.env
