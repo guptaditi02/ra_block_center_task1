@@ -19,10 +19,6 @@ SG.VvmQ-_G7QsGmh_hRALzRvg.3SQp_h1svC1qMvwAv5_2p2wRgzvESWw8Tn2I-LfFu04
 
 @app.route('/api/send', methods=['POST'])
 def send_data():
-    
-    # TODO: Generate and send PDF (you can use the `reportlab` library to generate the PDF)
-    # This function just sends an email for now
-    
     try:
         data = request.json
         dob, first_name, last_name = data['dob'],data['firstName'],data['lastName']
