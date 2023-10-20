@@ -25,9 +25,9 @@ def send_data():
     
     try:
         data = request.json
-        dob = data['dob']
+        dob, first_name, last_name = data['dob'],data['firstName'],data['lastName']
         age, day_of_week = calculate_age_and_day(dob)
-        send_email(data['email'], age, day_of_week)
+        send_email(data['email'], first_name,last_name, age, day_of_week)
         return jsonify({"message": "Email sent successfully!"})
 
     except Exception as e:
@@ -50,7 +50,7 @@ def calculate_age_and_day(dob):
     return age, day_of_week
 
 
-def send_email(to_email, age, day_of_week):
+def send_email(to_email, first_name, last_name, age, day_of_week):
     # Your SendGrid API Key
     SENDGRID_API_KEY = 'SG.VvmQ-_G7QsGmh_hRALzRvg.3SQp_h1svC1qMvwAv5_2p2wRgzvESWw8Tn2I-LfFu04'
     
@@ -58,7 +58,7 @@ def send_email(to_email, age, day_of_week):
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
 
     # Generate PDF
-    file_name = generate_pdf(age, day_of_week)
+    file_name = generate_pdf(first_name, last_name, age, day_of_week)
 
     # Read PDF file as bytes and encode to base64
     with open(file_name, "rb") as f:
@@ -92,11 +92,11 @@ def send_email(to_email, age, day_of_week):
 
     os.remove(file_name)  # Remove the generated PDF after sending
 
-def generate_pdf(age, day_of_week):
-    file_name = str(age)+"_and_"+str(day_of_week)+".pdf"
+def generate_pdf(first_name, last_name, age, day_of_week):
+    file_name = "age_and_day.pdf"
     c = canvas.Canvas(file_name, pagesize=letter)
     width, height = letter
-
+    c.drawString(100, height - 150, f"Name: {first_name} {last_name}")
     c.drawString(100, height - 200, f"Your age: {age}")
     c.drawString(100, height - 250, f"Day of week you were born: {day_of_week}")
     c.save()
